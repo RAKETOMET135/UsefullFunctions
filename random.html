@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random</title>
+</head>
+<body>
+    <script>
+        function getRandomNumber(number_min, number_max, decimals){
+            if (number_min >= number_max) return null
+
+            let decimalMulti = Math.pow(10, decimals)
+            let min = number_min * decimalMulti
+            let max = number_max * decimalMulti
+
+            let range = max - min
+
+            let randomNumber = Math.floor(Math.random() * range +1)
+
+            randomNumber += number_min
+            randomNumber /= decimalMulti
+
+            return randomNumber
+        }
+
+        let number = getRandomNumber(130, 135, 1)
+        console.log(number)
+    </script>
+</body>
+</html>
