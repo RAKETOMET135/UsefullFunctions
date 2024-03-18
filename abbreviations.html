@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abbreviations</title>
+</head>
+<body>
+    <script>
+        //returns number in abbreviated format using "abbreviations_list" and adds numbers after dot based on "numbers_after_dot"
+        //example: number = 10000; abbreviations_list = ["K", "M", "B"]; numbers_after_dot = 1; => returns: "10.0K" <--string format
+        function AbbreviateNumber(number, abbreviations_list, numbers_after_dot){
+            let converted_number
+
+            number = number.toString()
+            let digits = number.length
+            let num_diff_list = []
+            for (let i = 1; i < 100; i++){
+                let num_diff = 3 * i
+
+                num_diff_list.push(num_diff)
+            }
+
+            if (digits > 3){
+                let picked_num_diff
+
+                for (let num_diff of num_diff_list){
+                    if (digits < num_diff +4 && digits > num_diff){
+                        picked_num_diff = num_diff
+                    }
+                }
+
+                let digits_to_display = digits - picked_num_diff
+
+                converted_number = number.slice(0, digits_to_display) + "." + number.slice(digits_to_display, digits_to_display+numbers_after_dot)
+                if (numbers_after_dot <= 0) converted_number = converted_number.slice(0, converted_number.length-1)
+
+                converted_number += abbreviations_list[picked_num_diff/3 -1]
+            } else{
+                converted_number = number
+            }
+
+            return converted_number
+        }
+
+
+
+        let number = 646464654654
+        let abbr_list = [
+            "K", "M", "B", "T", "Qd", "Sp"
+        ]
+        let converted_number = AbbreviateNumber(number, abbr_list, 2)
+        console.log(converted_number)
+    </script>
+</body>
+</html>

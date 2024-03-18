@@ -7,6 +7,9 @@
 </head>
 <body>
     <script>
+        //return number that is in range of the minimal number "number_min" and maximal number "number_max"
+        //this number will have decimals based on the decimal parameter "decimals"
+        //example: number_min = 0; number_max = 5; decimals = 1 => possible number: 3.2
         function getRandomNumber(number_min, number_max, decimals){
             if (number_min >= number_max) return null
 
@@ -24,6 +27,7 @@
             return randomNumber
         }
 
+        
         let number = getRandomNumber(130, 135, 1)
         console.log(number)
     </script>
