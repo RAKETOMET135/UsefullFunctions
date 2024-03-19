@@ -43,14 +43,47 @@
             return converted_number
         }
 
+        //returns number in abbreviated format with commas after every third number
+        //example: number = 10000; => returns: 10,000   <--string format
+        function AbbreviateNumber2(number){
+            let converted_number = ""
 
+            number = number.toString()
+            let digits = number.length
+
+            let t = 1
+            for (let i = 0; i < digits; i++){
+                let letter = number.slice(digits -i -1, digits -i)
+                converted_number = converted_number + letter
+
+                if (t == 3 && i != digits -1){
+                    t = 0
+                    converted_number = converted_number + ","
+                }
+                t+= 1
+            }
+
+            let finished_number = ""
+
+            for (let i = 0; i < converted_number.length; i++){
+                let letter = converted_number.slice(converted_number.length -i -1,  converted_number.length -i)
+                finished_number = finished_number + letter
+            }
+
+            return finished_number
+        }
 
         let number = 646464654654
+
         let abbr_list = [
             "K", "M", "B", "T", "Qd", "Sp"
         ]
         let converted_number = AbbreviateNumber(number, abbr_list, 2)
         console.log(converted_number)
+
+        let converted_number_2 = AbbreviateNumber2(number)
+        console.log(converted_number_2)
+
     </script>
 </body>
 </html>
