@@ -12,7 +12,9 @@
         function AbbreviateNumber(number, abbreviations_list, numbers_after_dot){
             let converted_number
 
-            number = number.toString()
+            let number_string = number.toString()
+            number = Math.round(number).toString()
+
             let digits = number.length
             let num_diff_list = []
             for (let i = 1; i < 100; i++){
@@ -23,6 +25,9 @@
 
             if (digits > 3){
                 let picked_num_diff
+                number = Math.round(number)
+                number = number.toString()
+                digits = number.length
 
                 for (let num_diff of num_diff_list){
                     if (digits < num_diff +4 && digits > num_diff){
@@ -37,17 +42,23 @@
 
                 converted_number += abbreviations_list[picked_num_diff/3 -1]
             } else{
-                converted_number = number
+                converted_number = number_string
             }
 
             return converted_number
         }
 
-        //returns number in abbreviated format with commas after every third number
-        //example: number = 10000; => returns: 10,000   <--string format
-        function AbbreviateNumber2(number){
+
+
+
+
+
+        //returns number in abbreviated format with symbols after every third number
+        //example: number = 10000; symbol = ","; => returns: 10,000   <--string format
+        function AbbreviateNumber2(number, symbol){
             let converted_number = ""
 
+            number = Math.round(number)
             number = number.toString()
             let digits = number.length
 
@@ -58,22 +69,104 @@
 
                 if (t == 3 && i != digits -1){
                     t = 0
-                    converted_number = converted_number + ","
+                    converted_number = converted_number + symbol
                 }
                 t+= 1
             }
 
             let finished_number = ""
+            let converted_number_length = converted_number.length
 
-            for (let i = 0; i < converted_number.length; i++){
-                let letter = converted_number.slice(converted_number.length -i -1,  converted_number.length -i)
+            for (let i = 0; i < converted_number_length; i++){
+                let letter = converted_number.slice(converted_number_length -i -1,  converted_number_length -i)
                 finished_number = finished_number + letter
             }
 
             return finished_number
         }
 
-        let number = 646464654654
+
+
+
+
+        //returns number in abbreviated format with extra zeroes and with symbols after every third number
+        //example: number = 10000; abbr_length = 9; symbol = " "; => 000 010 000    <--string format
+        function AbbreviateNumber3(number, abbr_length, symbol){
+            let converted_number = ""
+
+            number = Math.round(number)
+            number = number.toString()
+
+            let digits = number.length
+            let num_diff_list = []
+            for (let i = 1; i < 100; i++){
+                let num_diff = 3 * i
+
+                num_diff_list.push(num_diff)
+            }
+
+            let picked_num_diff
+            for (let num_diff of num_diff_list){
+                if (digits < num_diff +4 && digits > num_diff){
+                    picked_num_diff = num_diff +3
+                }
+            }
+
+            let digit_diff = Math.abs(picked_num_diff - digits)
+            let sector_diff = abbr_length - picked_num_diff
+            let t = 1
+
+            for (let i = 0; i < digits; i++){
+                let letter = number.slice(digits -i -1, digits -i)
+                converted_number = converted_number + letter
+
+                if (t == 3 && i != digits -1){
+                    t = 0
+                    converted_number = converted_number + symbol
+                }
+                t++
+            }
+
+            for (let i = 0; i < digit_diff; i++){
+                converted_number += "0"
+            }
+
+            let finished_number = ""
+            let converted_number_length = converted_number.length
+
+            for (let i = 0; i < converted_number_length; i++){
+                let letter = converted_number.slice(converted_number_length -i -1,  converted_number_length -i)
+                finished_number = finished_number + letter
+            }
+
+            number = finished_number
+            converted_number = ""
+            t = 1
+
+            for (let i = 0; i < abbr_length; i++){
+                if (i < sector_diff){
+                    converted_number += "0"
+                    if (t == 3){
+                        t = 0
+                        converted_number += symbol
+                    }
+                }
+                else{
+                    converted_number += number
+                    break
+                }
+
+                t++
+            }
+
+            return converted_number
+        }
+
+
+
+
+        //example of use
+        let number = 111157646564564000.256245856455555555555
 
         let abbr_list = [
             "K", "M", "B", "T", "Qd", "Sp"
@@ -81,8 +174,15 @@
         let converted_number = AbbreviateNumber(number, abbr_list, 2)
         console.log(converted_number)
 
-        let converted_number_2 = AbbreviateNumber2(number)
+        let converted_number_2 = AbbreviateNumber2(number, ",")
         console.log(converted_number_2)
+
+        let converted_number_2_2 = AbbreviateNumber2(number, " ")
+        console.log(converted_number_2_2)
+
+        let abbr_length = 24
+        let converted_number_3 = AbbreviateNumber3(number, abbr_length, " ")
+        console.log(converted_number_3)
 
     </script>
 </body>
