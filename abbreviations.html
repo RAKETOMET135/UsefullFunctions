@@ -11,9 +11,15 @@
         //example: number = 10000; abbreviations_list = ["K", "M", "B"]; numbers_after_dot = 1; => returns: "10.0K" <--string format
         function AbbreviateNumber(number, abbreviations_list, numbers_after_dot){
             let converted_number
-
+            let front_symbol = ""
             let number_string = number.toString()
-            number = Math.round(number).toString()
+
+            number = Math.round(number)
+            number = number.toString()
+            if (number.slice(0, 1) == "-"){
+                front_symbol = "-"
+                number = number.slice(1, number.length)
+            } 
 
             let digits = number.length
             let num_diff_list = []
@@ -41,8 +47,9 @@
                 if (numbers_after_dot <= 0) converted_number = converted_number.slice(0, converted_number.length-1)
 
                 converted_number += abbreviations_list[picked_num_diff/3 -1]
+                converted_number = front_symbol + converted_number
             } else{
-                converted_number = number_string
+                converted_number = front_symbol + number_string
             }
 
             return converted_number
@@ -58,8 +65,15 @@
         function AbbreviateNumber2(number, symbol){
             let converted_number = ""
 
+            let front_symbol = ""
+
             number = Math.round(number)
             number = number.toString()
+            if (number.slice(0, 1) == "-"){
+                front_symbol = "-"
+                number = number.slice(1, number.length)
+            }
+
             let digits = number.length
 
             let t = 1
@@ -82,6 +96,8 @@
                 finished_number = finished_number + letter
             }
 
+            finished_number = front_symbol + finished_number
+
             return finished_number
         }
 
@@ -94,8 +110,14 @@
         function AbbreviateNumber3(number, abbr_length, symbol){
             let converted_number = ""
 
+            let front_symbol = ""
+
             number = Math.round(number)
             number = number.toString()
+            if (number.slice(0, 1) == "-"){
+                front_symbol = "-"
+                number = number.slice(1, number.length)
+            }
 
             let digits = number.length
             let num_diff_list = []
@@ -159,6 +181,8 @@
                 t++
             }
 
+            converted_number = front_symbol + converted_number
+
             return converted_number
         }
 
@@ -167,6 +191,7 @@
 
         //example of use
         let number = 111157646564564000.256245856455555555555
+        console.log(number + "  <-- original number")
 
         let abbr_list = [
             "K", "M", "B", "T", "Qd", "Sp"

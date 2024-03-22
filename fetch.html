@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch</title>
+</head>
+<body>
+    <script>
+        //function that loads file based on "file_path", if the file is in same directory as this --> "file_path" can be just file name
+        //if data is successfully recieved --> returns data       else      logs the error
+        //example of calling this function: 
+       
+        //fetchData('fetch.json').then(data => {
+        //    const data_keys = Object.keys(data)
+        //
+        //    for (const data_key of data_keys){
+        //        const key = data[data_key]
+        //
+        //        console.log(key)      <-- logs the current element of the json file
+        //    }
+        //})
+        //                                
+        async function fetchData(file_path) {
+            try {
+                const response = await fetch(file_path)
+                const data = await response.json()
+                return data
+            } catch (error) {
+                console.error('Error:', error)
+            }
+        }
+
+
+
+
+
+
+        //example of use
+        fetchData('fetch.json').then(data => {
+            const data_keys = Object.keys(data)
+
+            for (const data_key of data_keys){
+                const key = data[data_key]
+
+                console.log(key)
+            }
+        })
+
+        
+        
+
+    </script>
+</body>
+</html>
